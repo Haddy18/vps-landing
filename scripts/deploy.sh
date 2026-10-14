@@ -84,7 +84,7 @@ if [ -n "${SITE_URL:-}" ]; then
     # ruta relativa ("/" o "/landing/"): se antepone el host del VPS.
     *) base="http://$VPS_HOST${SITE_URL%/}/" ;;
   esac
-  for u in "$base" "${base}style.css" "${base}favicon.svg"; do
+  for u in "$base" "${base}style.css" "${base}favicon.svg" "${base}admin/"; do
     code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 "$u" || echo 000)
     printf '  %-56s %s\n' "$u" "$code"
     [ "$code" = "200" ] || ok=false
