@@ -78,6 +78,8 @@ run_remote \
 # Verificación real: la URL pública tiene que responder como debe.
 # SITE_URL=/ (la raíz) o algo tipo http://…/landing/.
 if [ -n "${SITE_URL:-}" ]; then
+  # /admin/ redirige (302) a su página de login, así que se acepta cualquier
+  # 2xx o 3xx: lo que se comprueba es que el backend responde, no su ruta.
   ok=true
   case "$SITE_URL" in
     http://*|https://*) base="${SITE_URL%/}/" ;;
@@ -87,7 +89,10 @@ if [ -n "${SITE_URL:-}" ]; then
   for u in "$base" "${base}style.css" "${base}favicon.svg" "${base}admin/"; do
     code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 "$u" || echo 000)
     printf '  %-56s %s\n' "$u" "$code"
-    [ "$code" = "200" ] || ok=false
+    case "$code" in
+      [23]??) ;;
+      *) ok=false ;;
+    esac
   done
   # La raíz tiene que servir ESTA landing, no otra cosa (el tipo y un texto
   # propio del índice). Si nginx sigue apuntando al :3000, se nota aquí.
