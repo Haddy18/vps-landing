@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Saturno: planeta con anillo. Mismo diseño que genera scripts/gen-favicons.py -->
+  <defs>
+    <radialGradient id="p" cx="34%" cy="30%" r="85%">
+      <stop offset="0" stop-color="#ffd98a"/>
+      <stop offset="0.65" stop-color="#f0a848"/>
+      <stop offset="1" stop-color="#b96a20"/>
+    </radialGradient>
+    <clipPath id="front"><rect x="0" y="32" width="64" height="32"/></clipPath>
+  </defs>
+  <!-- anillo (atrás) -->
+  <g transform="rotate(-18 32 32)">
+    <ellipse cx="32" cy="32" rx="27" ry="8.6" fill="none" stroke="#cfd8ea" stroke-width="2.8" opacity="0.9"/>
+  </g>
+  <!-- planeta -->
+  <circle cx="32" cy="29.6" r="16.6" fill="url(#p)"/>
+  <!-- anillo (frente, solo la mitad inferior: pasa por delante del planeta) -->
+  <g transform="rotate(-18 32 32)">
+    <ellipse cx="32" cy="32" rx="27" ry="8.6" fill="none" stroke="#cfd8ea" stroke-width="2.8" clip-path="url(#front)"/>
+  </g>
+</svg>

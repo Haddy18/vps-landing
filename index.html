@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyectos · 212.227.41.107</title>
+<meta name="description" content="Índice de proyectos desplegados en el servidor 212.227.41.107: Sistema Solar (Three.js), Receipt (LÖVE/WebAssembly), panel de administración de los bots y servicios de automatización.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<main class="wrap">
+  <header class="hero">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="72" height="72">
+        <use href="#saturno"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Proyectos</h1>
+      <p class="sub">Cosas desplegadas en este servidor · <code>212.227.41.107</code></p>
+    </div>
+  </header>
+
+  <section class="grid" aria-label="Sitios web">
+
+    <a class="card" href="/solar-system/">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#orbita"/></svg>
+        </span>
+        <span class="tag tag-live">en vivo</span>
+      </div>
+      <h2>Sistema Solar</h2>
+      <p>Simulación interactiva en Three.js: órbitas keplerianas reales (elementos
+      JPL J2000), texturas 100 % procedurales, dos modos de escala, vuelo libre
+      y exportador de mallas OBJ.</p>
+      <span class="go">solar-system/ →</span>
+    </a>
+
+    <a class="card" href="/receipt/">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#recibo"/></svg>
+        </span>
+        <span class="tag tag-live">en vivo</span>
+      </div>
+      <h2>Receipt</h2>
+      <p>Juego en LÖVE (Lua) compilado a WebAssembly con love.js: se juega
+      directamente en el navegador, sin instalar nada.</p>
+      <span class="go">receipt/ →</span>
+    </a>
+
+    <a class="card" href="/admin/">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#escudo"/></svg>
+        </span>
+        <span class="tag tag-live">en vivo</span>
+      </div>
+      <h2>Admin · bots</h2>
+      <p>Panel de administración de los bots (Nuxt/Express). Gestiona usuarios,
+      respuestas, citas y la configuración de los relays de Telegram.</p>
+      <span class="go">admin/ →</span>
+    </a>
+
+    <div class="card card-int">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#relay"/></svg>
+        </span>
+        <span class="tag tag-int">interno</span>
+      </div>
+      <h2>Receipt relay</h2>
+      <p>Bot de Telegram que recibe mensajes y lanza ejecuciones del agente en
+      GitHub Actions (<code>opencode-runner</code>). Sin interfaz web pública.</p>
+      <span class="go muted">servicio systemd</span>
+    </div>
+
+    <div class="card card-int">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#proyecto"/></svg>
+        </span>
+        <span class="tag tag-int">interno</span>
+      </div>
+      <h2>OpenCode relay</h2>
+      <p>Segundo bot de Telegram con selector de proyectos; también despacha
+      tareas a GitHub Actions. Comparte máquina con el relay anterior.</p>
+      <span class="go muted">servicio systemd</span>
+    </div>
+
+    <div class="card card-int">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#orca"/></svg>
+        </span>
+        <span class="tag tag-int">interno</span>
+      </div>
+      <h2>Orca</h2>
+      <p>Servidor headless de Orca con emparejamiento y cliente web, expuesto
+      por la red Tailscale (no desde el puerto público).</p>
+      <span class="go muted">orca-serve</span>
+    </div>
+
+  </section>
+
+  <footer class="foot">
+    <p>nginx · systemd · GitHub Actions · despliegue automático en cada push.</p>
+  </footer>
+</main>
+
+<!-- Iconos inline: se reutilizan con <use>, sin peticiones extra -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="saturno">
+      <g transform="rotate(-18 32 32)">
+        <ellipse cx="32" cy="32" rx="27" ry="8.6" fill="none" stroke="#cfd8ea" stroke-width="2.8" opacity="0.9"/>
+      </g>
+      <circle cx="32" cy="29.6" r="16.6" fill="#f0a848"/>
+      <circle cx="27" cy="25" r="10" fill="#ffd98a" opacity="0.5"/>
+      <g transform="rotate(-18 32 32)">
+        <ellipse cx="32" cy="32" rx="27" ry="8.6" fill="none" stroke="#cfd8ea" stroke-width="2.8" clip-path="url(#front)"/>
+      </g>
+      <clipPath id="front"><rect x="0" y="32" width="64" height="32"/></clipPath>
+    </g>
+    <g id="orbita" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(-24 12 12)"/>
+      <circle cx="20.4" cy="9.2" r="1.5" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="recibo" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M6 3h12v18l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4L6 21z"/>
+      <path d="M9 8h6M9 12h6" stroke-linecap="round"/>
+    </g>
+    <g id="relay" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 9h11l-3-3M20 15H9l3 3"/>
+    </g>
+    <g id="proyecto" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    </g>
+    <g id="escudo" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>
+      <circle cx="12" cy="11" r="1.6" fill="currentColor" stroke="none"/>
+      <path d="M12 12.6V15" stroke-linecap="round"/>
+    </g>
+    <g id="orca" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="8" cy="8" r="3"/>
+      <path d="M3 20c0-3.3 2.2-5 5-5s5 1.7 5 5"/>
+      <path d="M16 10c2.5 0 5 1.5 5 4.5M16 6.5c1.8 0 3.5 1 3.5 3"/>
+    </g>
+  </defs>
+</svg>
+</body>
+</html>

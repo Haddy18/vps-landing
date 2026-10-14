@@ -1,0 +1,66 @@
+name: deploy
+
+# Landing del servidor: se despliega en cada push a main que toque su
+# contenido (o a mano con workflow_dispatch). Igual que en
+# solar-system-threejs: los secrets llenan un .env temporal y se ejecuta el
+# MISMO scripts/deploy.sh de local — misma verificación (URL raíz 200, HTML
+# y con el texto del índice). La clave privada jamás toca el repo.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "style.css"
+      - "favicon.svg"
+      - "favicon.ico"
+      - "favicon.png"
+      - "scripts/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+# Un despliegue no cancela a otro a medias (el intercambio es atómico, pero
+# preferimos cola a dos subidas entrelazadas).
+concurrency:
+  group: deploy-vps-landing
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preparar .env y clave SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
+          VPS_DEPLOY_PATH: ${{ secrets.VPS_DEPLOY_PATH }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          for v in VPS_HOST VPS_USER VPS_SSH_PORT VPS_DEPLOY_PATH VPS_SSH_KEY; do
+            [ -n "${!v:-}" ] || { echo "::error:: falta el secret $v"; exit 1; }
+          done
+          # .env como el local (gitignored aquí; en CI se genera y ya).
+          {
+            echo "VPS_HOST=$VPS_HOST"
+            echo "VPS_USER=$VPS_USER"
+            echo "VPS_SSH_PORT=$VPS_SSH_PORT"
+            echo "VPS_DEPLOY_PATH=$VPS_DEPLOY_PATH"
+            echo "SITE_URL=${SITE_URL:-/}"
+          } > .env
+          # La clave privada de despliegue (pública en authorized_keys del VPS).
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/vps_deploy_key
+          chmod 600 ~/.ssh/vps_deploy_key
+
+      - name: Desplegar
+        run: |
+          export VPS_SSH_KEY="$HOME/.ssh/vps_deploy_key"
+          bash scripts/deploy.sh
