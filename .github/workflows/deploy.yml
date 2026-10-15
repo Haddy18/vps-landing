@@ -11,6 +11,7 @@ on:
     paths:
       - "index.html"
       - "style.css"
+      - "live.js"
       - "favicon.svg"
       - "favicon.ico"
       - "favicon.png"

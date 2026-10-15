@@ -54,7 +54,7 @@ run_remote() {
 }
 
 # Solo la landing viaja; .git, .env y scripts se quedan aquí.
-SHIP=(index.html style.css favicon.svg favicon.ico favicon.png)
+SHIP=(index.html style.css live.js favicon.svg favicon.ico favicon.png)
 
 echo "▸ destino  $VPS_USER@$VPS_HOST:$VPS_SSH_PORT → $VPS_DEPLOY_PATH"
 echo "▸ acceso   ${VPS_SSH:-ssh (clave)}"
@@ -68,8 +68,10 @@ fi
 P="$VPS_DEPLOY_PATH"
 
 echo "▸ subiendo…"
+# version.txt se genera EN EL SERVIDOR con la marca del despliegue: es lo que
+# sondea live.js para recargar las pestañas abiertas (ver README).
 tar -czf - "${SHIP[@]}" | run_remote \
-  "rm -rf '$P.tmp' && mkdir -p '$P.tmp' && tar -xzf - -C '$P.tmp' && chmod -R a+rX '$P.tmp' && echo '  recibido OK'"
+  "rm -rf '$P.tmp' && mkdir -p '$P.tmp' && tar -xzf - -C '$P.tmp' && date -u +%FT%TZ > '$P.tmp/version.txt' && chmod -R a+rX '$P.tmp' && echo '  recibido OK'"
 
 echo "▸ intercambiando…"
 run_remote \
@@ -86,7 +88,7 @@ if [ -n "${SITE_URL:-}" ]; then
     # ruta relativa ("/" o "/landing/"): se antepone el host del VPS.
     *) base="http://$VPS_HOST${SITE_URL%/}/" ;;
   esac
-  for u in "$base" "${base}style.css" "${base}favicon.svg" "${base}admin/"; do
+  for u in "$base" "${base}style.css" "${base}favicon.svg" "${base}version.txt" "${base}admin/"; do
     code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 "$u" || echo 000)
     printf '  %-56s %s\n' "$u" "$code"
     case "$code" in

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Proyectos · 212.227.41.107</title>
-<meta name="description" content="Índice de proyectos desplegados en el servidor 212.227.41.107: Sistema Solar (Three.js), Receipt (LÖVE/WebAssembly), panel de administración de los bots y servicios de automatización.">
+<meta name="description" content="Índice de proyectos desplegados en el servidor 212.227.41.107: Sistema Solar, Vía Láctea y Tierra en tiempo real (Three.js), Receipt (LÖVE/WebAssembly), panel de administración de los bots y servicios de automatización.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -40,6 +40,34 @@
       JPL J2000), texturas 100 % procedurales, dos modos de escala, vuelo libre
       y exportador de mallas OBJ.</p>
       <span class="go">solar-system/ →</span>
+    </a>
+
+    <a class="card" href="/milky-way/">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#galaxia"/></svg>
+        </span>
+        <span class="tag tag-live">en vivo</span>
+      </div>
+      <h2>Vía Láctea</h2>
+      <p>Cielo nocturno real en Three.js: 119.625 estrellas del catálogo HYG
+      con sus nombres y espectros, constelaciones 3D, nebulosas y el disco
+      galáctico con el Sol en su sitio exacto.</p>
+      <span class="go">milky-way/ →</span>
+    </a>
+
+    <a class="card" href="/earth/">
+      <div class="card-top">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><use href="#tierra"/></svg>
+        </span>
+        <span class="tag tag-live">en vivo</span>
+      </div>
+      <h2>Tierra en tiempo real</h2>
+      <p>La Tierra ahora mismo en Three.js: terminador solar calculado por hora
+      UTC, luces de ciudad nocturnas, nubes, estaciones y la órbita de la ISS
+      propagada desde su TLE real.</p>
+      <span class="go">earth/ →</span>
     </a>
 
     <a class="card" href="/receipt/">
@@ -153,7 +181,21 @@
       <path d="M3 20c0-3.3 2.2-5 5-5s5 1.7 5 5"/>
       <path d="M16 10c2.5 0 5 1.5 5 4.5M16 6.5c1.8 0 3.5 1 3.5 3"/>
     </g>
+    <g id="galaxia" fill="none" stroke="currentColor" stroke-width="1.6">
+      <ellipse cx="12" cy="12" rx="9.8" ry="4.2" transform="rotate(-24 12 12)"/>
+      <ellipse cx="12" cy="12" rx="5.2" ry="2.2" transform="rotate(-24 12 12)" opacity="0.65"/>
+      <circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="tierra" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="12" cy="12" r="9"/>
+      <ellipse cx="12" cy="12" rx="4.1" ry="9"/>
+      <path d="M3.4 9.4h17.2M3.4 14.6h17.2" opacity="0.8"/>
+    </g>
   </defs>
 </svg>
+
+<!-- Recarga en vivo: si la landing cambia en el VPS, la pestaña se actualiza
+     sola (sondea version.txt). Ver live.js. -->
+<script defer src="live.js"></script>
 </body>
 </html>
